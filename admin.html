@@ -16,7 +16,7 @@
     .logo span { color:white; }
     .back-btn { padding:9px 22px; background:#222; color:#ccc; border:1px solid var(--border); border-radius:8px; font-size:14px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
     .back-btn:hover { background:#333; color:white; }
-    .admin-container { max-width:1100px; margin:40px auto; padding:0 40px; }
+    .admin-container { max-width:900px; margin:40px auto; padding:0 40px; }
     .admin-header { margin-bottom:35px; }
     .admin-header h1 { font-family:'Bebas Neue',cursive; font-size:42px; letter-spacing:1px; margin-bottom:5px; }
     .admin-header p { color:var(--muted); font-size:15px; }
@@ -25,16 +25,8 @@
     .stat-card .number { font-family:'Bebas Neue',cursive; font-size:48px; color:var(--red); line-height:1; }
     .stat-card .label { color:var(--muted); font-size:14px; margin-top:5px; }
     .upload-section { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; padding:40px; margin-bottom:40px; }
-    .upload-section h2 { font-family:'Bebas Neue',cursive; font-size:30px; letter-spacing:1px; margin-bottom:10px; }
-    .upload-section .subtitle { color:var(--muted); font-size:14px; margin-bottom:25px; }
-
-    /* TABS */
-    .tabs { display:flex; gap:10px; margin-bottom:25px; }
-    .tab { padding:10px 24px; border-radius:8px; border:1px solid var(--border); color:#ccc; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif; background:transparent; }
-    .tab.active { background:var(--red); border-color:var(--red); color:white; }
-    .tab-content { display:none; }
-    .tab-content.active { display:block; }
-
+    .upload-section h2 { font-family:'Bebas Neue',cursive; font-size:30px; letter-spacing:1px; margin-bottom:8px; }
+    .upload-section .subtitle { color:var(--muted); font-size:14px; margin-bottom:28px; }
     .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
     .form-group { display:flex; flex-direction:column; gap:8px; }
     .form-group.full { grid-column:1/-1; }
@@ -43,31 +35,20 @@
       padding:12px 15px; background:#0f0f0f; border:1px solid var(--border);
       border-radius:8px; color:white; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.2s;
     }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--red); }
-    .form-group textarea { resize:vertical; min-height:80px; }
+    .form-group input:focus, .form-group select:focus { border-color:var(--red); }
     .form-group select option { background:#1c1c1c; }
+    .input-tip { font-size:12px; color:var(--muted); margin-top:4px; }
+    .input-tip a { color:var(--red); text-decoration:none; }
 
-    .file-upload-area { border:2px dashed var(--border); border-radius:12px; padding:30px; text-align:center; cursor:pointer; transition:all 0.2s; position:relative; }
-    .file-upload-area:hover { border-color:var(--red); background:rgba(229,9,20,0.05); }
-    .file-upload-area input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
-    .file-upload-area .icon { font-size:36px; margin-bottom:10px; }
-    .file-upload-area p { color:var(--muted); font-size:14px; }
-    .file-upload-area .file-name { color:var(--red); font-weight:600; margin-top:8px; font-size:14px; }
+    .poster-preview { width:100%; height:200px; object-fit:cover; border-radius:8px; margin-top:10px; display:none; border:1px solid var(--border); }
 
-    /* DRIVE LINK INPUT */
-    .drive-input-wrap { position:relative; }
-    .drive-input-wrap input { padding-left:40px; }
-    .drive-input-wrap .drive-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:18px; }
-    .link-tip { background:#1a1a1a; border:1px solid var(--border); border-radius:8px; padding:15px; margin-top:10px; font-size:13px; color:var(--muted); line-height:1.7; }
-    .link-tip strong { color:#ccc; }
-
-    .submit-btn { margin-top:25px; padding:14px 40px; background:var(--red); color:white; border:none; border-radius:8px; font-size:16px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; display:flex; align-items:center; gap:10px; }
+    .submit-btn { margin-top:25px; padding:14px 40px; background:var(--red); color:white; border:none; border-radius:8px; font-size:16px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
     .submit-btn:hover { background:var(--dark-red); transform:translateY(-2px); }
+    .submit-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 
     .movies-section h2 { font-family:'Bebas Neue',cursive; font-size:30px; letter-spacing:1px; margin-bottom:20px; }
     .movie-list { display:flex; flex-direction:column; gap:15px; }
-    .movie-row { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; align-items:center; gap:20px; transition:border-color 0.2s; }
-    .movie-row:hover { border-color:#444; }
+    .movie-row { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; align-items:center; gap:20px; }
     .movie-row img { width:60px; height:80px; object-fit:cover; border-radius:8px; flex-shrink:0; }
     .movie-row-info { flex:1; }
     .movie-row-info h3 { font-size:16px; font-weight:600; margin-bottom:5px; }
@@ -75,18 +56,14 @@
     .movie-row-actions { display:flex; gap:10px; }
     .btn-delete { padding:8px 18px; background:transparent; color:#ff4444; border:1px solid #ff4444; border-radius:8px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
     .btn-delete:hover { background:#ff4444; color:white; }
-    .btn-play { padding:8px 18px; background:transparent; color:var(--red); border:1px solid var(--red); border-radius:8px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
-    .btn-play:hover { background:var(--red); color:white; }
     .video-tag { display:inline-block; background:rgba(229,9,20,0.2); color:var(--red); font-size:11px; padding:2px 8px; border-radius:4px; margin-left:8px; }
     .no-video-tag { display:inline-block; background:#222; color:var(--muted); font-size:11px; padding:2px 8px; border-radius:4px; margin-left:8px; }
     .empty-list { text-align:center; padding:40px; color:var(--muted); font-size:15px; }
-
-    /* VIDEO MODAL */
-    .video-modal { position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:1000; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; }
-    .video-modal.active { opacity:1; pointer-events:all; }
-    .video-modal-title { font-family:'Bebas Neue',cursive; font-size:28px; margin-bottom:15px; }
-    .video-close { position:absolute; top:20px; right:30px; background:none; border:none; color:white; font-size:30px; cursor:pointer; }
-
+    .saving-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; display:none; align-items:center; justify-content:center; flex-direction:column; gap:15px; }
+    .saving-overlay.show { display:flex; }
+    .saving-text { font-family:'Bebas Neue',cursive; font-size:28px; letter-spacing:2px; }
+    .spinner { width:40px; height:40px; border:4px solid #333; border-top-color:var(--red); border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
     .toast { position:fixed; bottom:30px; right:30px; background:#1c1c1c; border:1px solid var(--border); border-left:4px solid var(--red); border-radius:10px; padding:16px 24px; color:white; font-size:14px; z-index:9999; transform:translateX(150%); transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
     .toast.show { transform:translateX(0); }
   </style>
@@ -95,13 +72,13 @@
 
 <nav>
   <div class="logo">🎬 SHAFFY <span>ADMIN</span></div>
-  <button class="back-btn" onclick="window.location.href='shaffy-movie.html'">← Back to Site</button>
+  <button class="back-btn" onclick="window.location.href='index.html'">← Back to Site</button>
 </nav>
 
 <div class="admin-container">
   <div class="admin-header">
     <h1>Admin Dashboard</h1>
-    <p>Upload and manage movies for Shaffy Movies</p>
+    <p>Add and manage movies for Shaffy Movies</p>
   </div>
 
   <div class="stats">
@@ -111,10 +88,10 @@
   </div>
 
   <div class="upload-section">
-    <h2>➕ Upload New Movie</h2>
-    <p class="subtitle">Fill in the movie details below. Choose how you want to add the video.</p>
+    <h2>➕ Add New Movie</h2>
+    <p class="subtitle">Use image URLs and Google Drive links — no file uploads needed!</p>
 
-    <div class="form-grid" style="margin-bottom:20px">
+    <div class="form-grid">
       <div class="form-group">
         <label>Movie Title *</label>
         <input type="text" id="movieTitle" placeholder="e.g. Berlin Season 2">
@@ -147,61 +124,29 @@
           <option value="TRENDING">TRENDING</option>
         </select>
       </div>
+
+      <div class="form-group full">
+        <label>Poster Image URL *</label>
+        <input type="url" id="posterUrl" placeholder="https://..." oninput="previewPoster(this.value)">
+        <div class="input-tip">Right-click any movie poster image online → "Copy image address" and paste here</div>
+        <img id="posterPreview" class="poster-preview" alt="Poster preview">
+      </div>
+
+      <div class="form-group full">
+        <label>Google Drive Video Link *</label>
+        <input type="url" id="driveLink" placeholder="https://drive.google.com/file/d/...">
+        <div class="input-tip">
+          Upload to <a href="https://drive.google.com" target="_blank">Google Drive</a> → Right-click → Share → "Anyone with link" → Copy link
+        </div>
+      </div>
+
       <div class="form-group full">
         <label>Description</label>
-        <textarea id="movieDesc" placeholder="Short description of the movie..."></textarea>
-      </div>
-
-      <!-- POSTER -->
-      <div class="form-group full">
-        <label>Movie Poster (Image) *</label>
-        <div class="file-upload-area">
-          <input type="file" accept="image/*" onchange="handlePoster(this)">
-          <div class="icon">🖼</div>
-          <p>Click to upload poster image</p>
-          <p>JPG, PNG, WEBP accepted</p>
-          <div class="file-name" id="posterName"></div>
-        </div>
+        <input type="text" id="movieDesc" placeholder="Short description of the movie...">
       </div>
     </div>
 
-    <!-- VIDEO TABS -->
-    <div class="form-group full">
-      <label>Movie Video *</label>
-      <div class="tabs">
-        <button class="tab active" onclick="switchTab('drive')">☁ Google Drive / YouTube Link</button>
-        <button class="tab" onclick="switchTab('local')">💾 Small File (under 50MB)</button>
-      </div>
-
-      <!-- DRIVE TAB -->
-      <div class="tab-content active" id="tab-drive">
-        <div class="drive-input-wrap">
-          <span class="drive-icon">🔗</span>
-          <input type="text" id="driveLink" placeholder="Paste Google Drive or YouTube link here...">
-        </div>
-        <div class="link-tip">
-          <strong>How to get Google Drive link:</strong><br>
-          1. Upload your movie to <a href="https://drive.google.com" target="_blank" style="color:var(--red)">drive.google.com</a><br>
-          2. Right-click the file → <strong>Share</strong><br>
-          3. Set to <strong>"Anyone with the link"</strong><br>
-          4. Click <strong>Copy link</strong> and paste it above ✅
-        </div>
-      </div>
-
-      <!-- LOCAL FILE TAB -->
-      <div class="tab-content" id="tab-local">
-        <div class="file-upload-area" id="videoArea">
-          <input type="file" accept="video/*" onchange="handleVideo(this)">
-          <div class="icon">🎬</div>
-          <p>Click to upload video file</p>
-          <p style="color:#ff6b6b; font-weight:600;">⚠ Only files under 50MB work here</p>
-          <p>For larger files, use Google Drive link instead</p>
-          <div class="file-name" id="videoName"></div>
-        </div>
-      </div>
-    </div>
-
-    <button class="submit-btn" onclick="uploadMovie()">➕ Add Movie</button>
+    <button class="submit-btn" onclick="uploadMovie()" id="submitBtn">➕ Add Movie</button>
   </div>
 
   <div class="movies-section">
@@ -210,45 +155,45 @@
   </div>
 </div>
 
-<!-- VIDEO MODAL -->
-<div class="video-modal" id="videoModal">
-  <button class="video-close" onclick="closeVideo()">✕</button>
-  <div class="video-modal-title" id="videoModalTitle"></div>
-  <video id="videoPlayer" controls style="width:90%;max-width:900px;border-radius:12px;max-height:70vh;"></video>
+<!-- SAVING OVERLAY -->
+<div class="saving-overlay" id="savingOverlay">
+  <div class="spinner"></div>
+  <div class="saving-text">Saving...</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  const API_KEY = '$2a$10$HqXk0kiw6dZg4JawB5cMq.ZlPXlc4JKe/mE6qzAcN68Wkhg2IiK3.';
+  const API_KEY = '$2a$10$6/CCDCRYHP4lRjXuk9w7tu5FsqD7diG4QXPrpXilbgvlRF.bIqo6.';
   const BIN_ID = '6a1956c521f9ee59d298d52a';
   let movies = [];
-  let posterDataUrl = '';
-  let videoDataUrl = '';
-  let activeTab = 'drive';
 
-  function switchTab(tab) {
-    activeTab = tab;
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById('tab-' + tab).classList.add('active');
-    videoDataUrl = '';
-    document.getElementById('videoName').textContent = '';
-    document.getElementById('driveLink').value = '';
+  function previewPoster(url) {
+    const img = document.getElementById('posterPreview');
+    if (url.startsWith('http')) {
+      img.src = url;
+      img.style.display = 'block';
+      img.onerror = () => { img.style.display = 'none'; };
+    } else {
+      img.style.display = 'none';
+    }
+  }
+
+  function convertDriveLink(url) {
+    const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match) return 'https://drive.google.com/file/d/' + match[1] + '/preview';
+    return url;
   }
 
   async function loadMovies() {
     try {
       const res = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', {
-        headers: { 
-          'X-Master-Key': API_KEY,
-          'X-Bin-Meta': false
-        }
+        headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': 'false' }
       });
       const data = await res.json();
-      movies = Array.isArray(data.record) ? data.record : (Array.isArray(data) ? data : []);
-      console.log('Loaded:', movies.length, 'movies');
+      movies = Array.isArray(data) ? data : (Array.isArray(data.record) ? data.record : []);
+      // Filter out undefined/broken movies
+      movies = movies.filter(m => m && m.title && m.title !== 'undefined');
     } catch(e) {
       console.error('Load error:', e);
       movies = [];
@@ -258,6 +203,7 @@
   }
 
   async function saveMovies() {
+    document.getElementById('savingOverlay').classList.add('show');
     try {
       const res = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID, {
         method: 'PUT',
@@ -268,67 +214,15 @@
         },
         body: JSON.stringify(movies)
       });
+      const data = await res.json();
+      console.log('Saved:', data);
       if (!res.ok) throw new Error('Save failed: ' + res.status);
-      console.log('Saved successfully');
     } catch(e) {
       console.error('Save error:', e);
-      showToast('❌ Error saving. Check internet connection.');
+      showToast('❌ Error saving! Check console for details.');
     }
+    document.getElementById('savingOverlay').classList.remove('show');
     updateStats();
-  }
-
-  function updateStats() {
-    document.getElementById('totalMovies').textContent = movies.length;
-    document.getElementById('withVideo').textContent = movies.filter(m => m.videoUrl).length;
-    document.getElementById('noVideo').textContent = movies.filter(m => !m.videoUrl).length;
-  }
-
-  function handlePoster(input) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      // Compress image to max 300x400 to save space
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 300;
-        canvas.height = 400;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, 300, 400);
-        posterDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-        document.getElementById('posterName').textContent = '✅ ' + file.name;
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function handleVideo(input) {
-    const file = input.files[0];
-    if (!file) return;
-    if (file.size > 52428800) {
-      showToast('⚠ File too large! Please use Google Drive link instead.');
-      input.value = '';
-      return;
-    }
-    document.getElementById('videoName').textContent = '⏳ Loading ' + file.name + '...';
-    const reader = new FileReader();
-    reader.onload = e => {
-      videoDataUrl = e.target.result;
-      document.getElementById('videoName').textContent = '✅ ' + file.name;
-    };
-    reader.onerror = () => showToast('❌ Error reading file. Try Google Drive instead.');
-    reader.readAsDataURL(file);
-  }
-
-  function convertDriveLink(url) {
-    // Convert Google Drive share link to direct embed/stream link
-    const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (match) {
-      return 'https://drive.google.com/file/d/' + match[1] + '/preview';
-    }
-    return url; // YouTube or other links returned as-is
   }
 
   async function uploadMovie() {
@@ -337,49 +231,28 @@
     const rating = document.getElementById('movieRating').value || '8.0';
     const badge = document.getElementById('movieBadge').value;
     const desc = document.getElementById('movieDesc').value.trim();
+    const posterUrl = document.getElementById('posterUrl').value.trim();
+    const driveLink = document.getElementById('driveLink').value.trim();
 
     if (!title) { showToast('⚠ Please enter a movie title!'); return; }
     if (!genre) { showToast('⚠ Please select a genre!'); return; }
-    if (!posterDataUrl) { showToast('⚠ Please upload a poster image!'); return; }
-
-    let videoUrl = '';
-    if (activeTab === 'drive') {
-      const link = document.getElementById('driveLink').value.trim();
-      if (!link) { showToast('⚠ Please paste a video link!'); return; }
-      videoUrl = convertDriveLink(link);
-    } else {
-      if (!videoDataUrl) { showToast('⚠ Please upload a video file!'); return; }
-      videoUrl = videoDataUrl;
-    }
+    if (!posterUrl) { showToast('⚠ Please enter a poster image URL!'); return; }
+    if (!driveLink) { showToast('⚠ Please enter a Google Drive link!'); return; }
 
     const movie = {
       id: Date.now(),
       title, genre, rating, badge, desc,
-      poster: posterDataUrl,
-      videoUrl,
-      isEmbed: activeTab === 'drive',
+      poster: posterUrl,
+      videoUrl: convertDriveLink(driveLink),
+      isEmbed: true,
       uploadedAt: new Date().toLocaleDateString()
     };
 
     movies.unshift(movie);
-    showToast('⏳ Saving...');
     await saveMovies();
     renderMovies();
     resetForm();
     showToast('🎉 "' + title + '" added successfully!');
-  }
-
-  function resetForm() {
-    document.getElementById('movieTitle').value = '';
-    document.getElementById('movieGenre').value = '';
-    document.getElementById('movieRating').value = '';
-    document.getElementById('movieBadge').value = '';
-    document.getElementById('movieDesc').value = '';
-    document.getElementById('posterName').textContent = '';
-    document.getElementById('videoName').textContent = '';
-    document.getElementById('driveLink').value = '';
-    posterDataUrl = '';
-    videoDataUrl = '';
   }
 
   async function deleteMovie(id) {
@@ -390,39 +263,21 @@
     showToast('🗑 Movie deleted.');
   }
 
-  function previewMovie(id) {
-    const movie = movies.find(m => m.id == id);
-    if (!movie || !movie.videoUrl) { showToast('⚠ No video for this movie.'); return; }
-    document.getElementById('videoModalTitle').textContent = movie.title;
-    const modal = document.getElementById('videoModal');
-    const player = document.getElementById('videoPlayer');
-
-    if (movie.isEmbed) {
-      player.style.display = 'none';
-      let iframe = document.getElementById('embedFrame');
-      if (!iframe) {
-        iframe = document.createElement('iframe');
-        iframe.id = 'embedFrame';
-        iframe.style.cssText = 'width:90%;max-width:900px;height:500px;border-radius:12px;border:none;';
-        modal.appendChild(iframe);
-      }
-      iframe.src = movie.videoUrl;
-      iframe.style.display = 'block';
-    } else {
-      player.style.display = 'block';
-      const iframe = document.getElementById('embedFrame');
-      if (iframe) iframe.style.display = 'none';
-      player.src = movie.videoUrl;
-    }
-    modal.classList.add('active');
+  function resetForm() {
+    document.getElementById('movieTitle').value = '';
+    document.getElementById('movieGenre').value = '';
+    document.getElementById('movieRating').value = '';
+    document.getElementById('movieBadge').value = '';
+    document.getElementById('movieDesc').value = '';
+    document.getElementById('posterUrl').value = '';
+    document.getElementById('driveLink').value = '';
+    document.getElementById('posterPreview').style.display = 'none';
   }
 
-  function closeVideo() {
-    document.getElementById('videoModal').classList.remove('active');
-    document.getElementById('videoPlayer').pause();
-    document.getElementById('videoPlayer').src = '';
-    const iframe = document.getElementById('embedFrame');
-    if (iframe) { iframe.src = ''; iframe.style.display = 'none'; }
+  function updateStats() {
+    document.getElementById('totalMovies').textContent = movies.length;
+    document.getElementById('withVideo').textContent = movies.filter(m => m.videoUrl).length;
+    document.getElementById('noVideo').textContent = movies.filter(m => !m.videoUrl).length;
   }
 
   function renderMovies() {
@@ -436,11 +291,9 @@
         <img src="${m.poster}" alt="${m.title}" onerror="this.src='https://picsum.photos/60/80?random=${m.id}'">
         <div class="movie-row-info">
           <h3>${m.title} ${m.videoUrl ? '<span class="video-tag">▶ Has Video</span>' : '<span class="no-video-tag">No Video</span>'}</h3>
-          <p>${m.genre} • ⭐ ${m.rating} • ${m.uploadedAt} ${m.isEmbed ? '• ☁ Drive/YouTube' : '• 💾 Local'}</p>
-          ${m.desc ? `<p style="margin-top:4px;font-size:12px;color:#555">${m.desc.substring(0,80)}...</p>` : ''}
+          <p>${m.genre} • ⭐ ${m.rating} • ${m.uploadedAt}</p>
         </div>
         <div class="movie-row-actions">
-          <button class="btn-play" onclick="previewMovie(${m.id})">▶ Preview</button>
           <button class="btn-delete" onclick="deleteMovie(${m.id})">🗑 Delete</button>
         </div>
       </div>
