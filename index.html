@@ -254,19 +254,25 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const API_KEY = '$2a$10$HqXk0kiw6dZg4JawB5cMq.ZlPXlc4JKe/mE6qzAcN68Wkhg2IiK3.';
-    const BIN_ID = '6a194f47ddf5aa59f7735bdb';
+    const API_KEY = '$2a$10$6/CCDCRYHP4lRjXuk9w7tu5FsqD7diG4QXPrpXilbgvlRF.bIqo6.';
+    const BIN_ID = '6a1956c521f9ee59d298d52a';
     let allMovies = [];
     let currentFilter = 'all';
 
     async function loadMovies() {
       try {
         const res = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', {
-          headers: { 'X-Master-Key': API_KEY }
+          headers: { 
+            'X-Master-Key': API_KEY,
+            'X-Bin-Meta': false
+          }
         });
+        if (!res.ok) throw new Error('Failed: ' + res.status);
         const data = await res.json();
-        allMovies = Array.isArray(data.record) ? data.record : [];
+        allMovies = Array.isArray(data.record) ? data.record : (Array.isArray(data) ? data : []);
+        console.log('Loaded movies:', allMovies.length);
       } catch(e) {
+        console.error('Load error:', e);
         allMovies = [];
       }
       renderMovies(allMovies);
