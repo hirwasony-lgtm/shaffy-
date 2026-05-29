@@ -288,8 +288,18 @@
     if (!file) return;
     const reader = new FileReader();
     reader.onload = e => {
-      posterDataUrl = e.target.result;
-      document.getElementById('posterName').textContent = '✅ ' + file.name;
+      // Compress image to max 300x400 to save space
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 300;
+        canvas.height = 400;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 300, 400);
+        posterDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        document.getElementById('posterName').textContent = '✅ ' + file.name;
+      };
+      img.src = e.target.result;
     };
     reader.readAsDataURL(file);
   }
