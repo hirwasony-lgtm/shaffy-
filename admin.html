@@ -221,7 +221,7 @@
 
 <script>
   const API_KEY = '$2a$10$HqXk0kiw6dZg4JawB5cMq.ZlPXlc4JKe/mE6qzAcN68Wkhg2IiK3.';
-  const BIN_ID = '6a194f47ddf5aa59f7735bdb';
+  const BIN_ID = '6a1956c521f9ee59d298d52a';
   let movies = [];
   let posterDataUrl = '';
   let videoDataUrl = '';
@@ -241,11 +241,16 @@
   async function loadMovies() {
     try {
       const res = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', {
-        headers: { 'X-Master-Key': API_KEY }
+        headers: { 
+          'X-Master-Key': API_KEY,
+          'X-Bin-Meta': false
+        }
       });
       const data = await res.json();
-      movies = Array.isArray(data.record) ? data.record : [];
+      movies = Array.isArray(data.record) ? data.record : (Array.isArray(data) ? data : []);
+      console.log('Loaded:', movies.length, 'movies');
     } catch(e) {
+      console.error('Load error:', e);
       movies = [];
     }
     renderMovies();
@@ -254,15 +259,19 @@
 
   async function saveMovies() {
     try {
-      await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID, {
+      const res = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'X-Master-Key': API_KEY
+          'X-Master-Key': API_KEY,
+          'X-Bin-Private': 'false'
         },
         body: JSON.stringify(movies)
       });
+      if (!res.ok) throw new Error('Save failed: ' + res.status);
+      console.log('Saved successfully');
     } catch(e) {
+      console.error('Save error:', e);
       showToast('❌ Error saving. Check internet connection.');
     }
     updateStats();
