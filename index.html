@@ -254,22 +254,20 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const API_KEY = '$2a$10$6/CCDCRYHP4lRjXuk9w7tu5FsqD7diG4QXPrpXilbgvlRF.bIqo6.';
-    const BIN_ID = '6a1956c521f9ee59d298d52a';
+    const GITHUB_USER = 'hirwasony-lgtm';
+    const GITHUB_REPO = 'shaffy-';
+    const MOVIES_FILE = 'movies.json';
     let allMovies = [];
     let currentFilter = 'all';
 
     async function loadMovies() {
       try {
-        const res = await fetch('https://api.jsonbin.io/v3/b/' + BIN_ID + '/latest', {
-          headers: { 
-            'X-Master-Key': API_KEY,
-            'X-Bin-Meta': false
-          }
-        });
-        if (!res.ok) throw new Error('Failed: ' + res.status);
-        const data = await res.json();
-        allMovies = Array.isArray(data.record) ? data.record : (Array.isArray(data) ? data : []);
+        const res = await fetch(
+          'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/' + MOVIES_FILE,
+          { cache: 'no-cache' }
+        );
+        if (!res.ok) throw new Error('No movies file yet');
+        allMovies = await res.json();
         console.log('Loaded movies:', allMovies.length);
       } catch(e) {
         console.error('Load error:', e);
@@ -410,5 +408,53 @@
 
     loadMovies();
   </script>
+  <section class="movies">
+
+    <h2>Upload Movie</h2>
+
+    <input type="file" id="movieUpload" accept="video/*">
+
+    <br><br>
+
+    <video id="videoPlayer" width="100%" controls></video>
+
+</section>
+
+<script>
+
+const movieUpload = document.getElementById("movieUpload");
+const videoPlayer = document.getElementById("videoPlayer");
+
+movieUpload.addEventListener("change", function(){
+
+    const file = this.files[0];
+
+    if(file){
+        const videoURL = URL.createObjectURL(file);
+        videoPlaye
+</script>
+<h1>Upload Movie</h1>
+
+<input type="file" id="movieUpload">
+
+<video id="videoPlayer" width="600" controls></video>
+
+<script>
+
+const upload = document.getElementById("movieUpload");
+const player = document.getElementById("videoPlayer");
+
+upload.addEventListener("change", function(){
+
+   const file = this.files[0];
+
+   if(file){
+      const url = URL.createObjectURL(file);
+      player.src = url;
+   }
+
+});
+
+</script>
 </body>
 </html>
