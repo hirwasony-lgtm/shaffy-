@@ -1,60 +1,368 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Dashboard</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shaffy Movies — Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --red:#e50914; --dark-red:#b0060f; --bg:#0a0a0a; --card-bg:#161616; --text:#fff; --muted:#888; --border:#2a2a2a; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; }
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+    nav { display:flex; justify-content:space-between; align-items:center; padding:18px 60px; background:#111; border-bottom:1px solid var(--border); }
+    .logo { font-family:'Bebas Neue',cursive; font-size:28px; color:var(--red); letter-spacing:2px; }
+    .logo span { color:white; }
+    .back-btn { padding:9px 22px; background:#222; color:#ccc; border:1px solid var(--border); border-radius:8px; font-size:14px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .back-btn:hover { background:#333; color:white; }
+    .admin-container { max-width:900px; margin:40px auto; padding:0 40px; }
+    .admin-header h1 { font-family:'Bebas Neue',cursive; font-size:42px; letter-spacing:1px; margin-bottom:5px; }
+    .admin-header p { color:var(--muted); font-size:15px; margin-bottom:35px; }
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:40px; }
+    .stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:25px; }
+    .stat-card .number { font-family:'Bebas Neue',cursive; font-size:48px; color:var(--red); line-height:1; }
+    .stat-card .label { color:var(--muted); font-size:14px; margin-top:5px; }
+    .upload-section { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; padding:40px; margin-bottom:40px; }
+    .upload-section h2 { font-family:'Bebas Neue',cursive; font-size:30px; letter-spacing:1px; margin-bottom:8px; }
+    .subtitle { color:var(--muted); font-size:14px; margin-bottom:28px; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .form-group { display:flex; flex-direction:column; gap:8px; }
+    .form-group.full { grid-column:1/-1; }
+    .form-group label { font-size:13px; font-weight:600; color:#ccc; }
+    .form-group input, .form-group select {
+      padding:12px 15px; background:#0f0f0f; border:1px solid var(--border);
+      border-radius:8px; color:white; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color:var(--red); }
+    .form-group select option { background:#1c1c1c; }
+    .input-tip { font-size:12px; color:var(--muted); margin-top:4px; }
+    .input-tip a { color:var(--red); text-decoration:none; }
+    .poster-preview { width:100%; height:180px; object-fit:cover; border-radius:8px; margin-top:10px; display:none; border:1px solid var(--border); }
+    .submit-btn { margin-top:25px; padding:14px 40px; background:var(--red); color:white; border:none; border-radius:8px; font-size:16px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
+    .submit-btn:hover { background:var(--dark-red); transform:translateY(-2px); }
+    .submit-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+    .movies-section h2 { font-family:'Bebas Neue',cursive; font-size:30px; letter-spacing:1px; margin-bottom:20px; }
+    .movie-list { display:flex; flex-direction:column; gap:15px; }
+    .movie-row { background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; align-items:center; gap:20px; }
+    .movie-row img { width:60px; height:80px; object-fit:cover; border-radius:8px; flex-shrink:0; }
+    .movie-row-info { flex:1; }
+    .movie-row-info h3 { font-size:16px; font-weight:600; margin-bottom:5px; }
+    .movie-row-info p { color:var(--muted); font-size:13px; }
+    .btn-delete { padding:8px 18px; background:transparent; color:#ff4444; border:1px solid #ff4444; border-radius:8px; font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
+    .btn-delete:hover { background:#ff4444; color:white; }
+    .video-tag { display:inline-block; background:rgba(229,9,20,0.2); color:var(--red); font-size:11px; padding:2px 8px; border-radius:4px; margin-left:8px; }
+    .empty-list { text-align:center; padding:40px; color:var(--muted); font-size:15px; }
+    .saving-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; display:none; align-items:center; justify-content:center; flex-direction:column; gap:15px; }
+    .saving-overlay.show { display:flex; }
+    .saving-text { font-family:'Bebas Neue',cursive; font-size:28px; letter-spacing:2px; }
+    .spinner { width:40px; height:40px; border:4px solid #333; border-top-color:var(--red); border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* TOKEN SETUP */
+    .setup-box { background:#1a0a0a; border:2px solid var(--red); border-radius:16px; padding:30px; margin-bottom:40px; }
+    .setup-box h3 { font-family:'Bebas Neue',cursive; font-size:24px; color:var(--red); margin-bottom:10px; }
+    .setup-box p { color:#ccc; font-size:14px; margin-bottom:15px; line-height:1.7; }
+    .setup-box input { width:100%; padding:12px 15px; background:#0f0f0f; border:1px solid var(--border); border-radius:8px; color:white; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; margin-bottom:10px; }
+    .setup-box input:focus { border-color:var(--red); }
+    .save-token-btn { padding:10px 25px; background:var(--red); color:white; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .token-status { font-size:13px; margin-top:8px; }
+
+    .toast { position:fixed; bottom:30px; right:30px; background:#1c1c1c; border:1px solid var(--border); border-left:4px solid var(--red); border-radius:10px; padding:16px 24px; color:white; font-size:14px; z-index:9999; transform:translateX(150%); transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    .toast.show { transform:translateX(0); }
+  </style>
 </head>
 <body>
 
-<h1>Admin Dashboard</h1>
+<nav>
+  <div class="logo">🎬 SHAFFY <span>ADMIN</span></div>
+  <button class="back-btn" onclick="window.location.href='index.html'">← Back to Site</button>
+</nav>
 
-<h2>Upload Movie</h2>
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Admin Dashboard</h1>
+    <p>Add and manage movies for Shaffy Movies</p>
+  </div>
 
-<input type="text" id="movieTitle" placeholder="Movie Title"><br><br>
-<input type="file" id="movieFile"><br><br>
+  <!-- GITHUB TOKEN SETUP -->
+  <div class="setup-box" id="setupBox">
+    <h3>🔑 One-Time Setup Required</h3>
+    <p>To save movies online, paste your <strong>GitHub Personal Access Token</strong> below.<br>
+    Go to <a href="https://github.com/settings/tokens/new" target="_blank" style="color:var(--red)">github.com/settings/tokens/new</a> → Select <strong>repo</strong> scope → Generate → Copy and paste here.</p>
+    <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+    <br>
+    <button class="save-token-btn" onclick="saveToken()">Save Token</button>
+    <div class="token-status" id="tokenStatus"></div>
+  </div>
 
-<button onclick="uploadMovie()">Upload</button>
+  <div class="stats">
+    <div class="stat-card"><div class="number" id="totalMovies">0</div><div class="label">Total Movies</div></div>
+    <div class="stat-card"><div class="number" id="withVideo">0</div><div class="label">With Video</div></div>
+    <div class="stat-card"><div class="number" id="noVideo">0</div><div class="label">No Video Yet</div></div>
+  </div>
 
-<h2>Uploaded Movies</h2>
-<ul id="movieList"></ul>
+  <div class="upload-section">
+    <h2>➕ Add New Movie</h2>
+    <p class="subtitle">Use image URLs and Google Drive links — no file uploads needed!</p>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Movie Title *</label>
+        <input type="text" id="movieTitle" placeholder="e.g. Berlin Season 2">
+      </div>
+      <div class="form-group">
+        <label>Genre *</label>
+        <select id="movieGenre">
+          <option value="">Select genre</option>
+          <option value="Action">Action</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Romance">Romance</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Horror">Horror</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Drama">Drama</option>
+          <option value="Thriller">Thriller</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Rating (1-10)</label>
+        <input type="number" id="movieRating" placeholder="e.g. 8.5" min="1" max="10" step="0.1">
+      </div>
+      <div class="form-group">
+        <label>Badge (optional)</label>
+        <select id="movieBadge">
+          <option value="">None</option>
+          <option value="NEW">NEW</option>
+          <option value="HOT">HOT</option>
+          <option value="TOP">TOP</option>
+          <option value="TRENDING">TRENDING</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Poster Image URL *</label>
+        <input type="url" id="posterUrl" placeholder="https://..." oninput="previewPoster(this.value)">
+        <div class="input-tip">Right-click any movie poster image → "Copy image address" and paste here</div>
+        <img id="posterPreview" class="poster-preview" alt="Poster preview">
+      </div>
+      <div class="form-group full">
+        <label>Google Drive Video Link *</label>
+        <input type="url" id="driveLink" placeholder="https://drive.google.com/file/d/...">
+        <div class="input-tip">Upload to <a href="https://drive.google.com" target="_blank">Google Drive</a> → Share → "Anyone with link" → Copy link</div>
+      </div>
+      <div class="form-group full">
+        <label>Description</label>
+        <input type="text" id="movieDesc" placeholder="Short description of the movie...">
+      </div>
+    </div>
+    <button class="submit-btn" onclick="uploadMovie()" id="submitBtn">➕ Add Movie</button>
+  </div>
+
+  <div class="movies-section">
+    <h2>🎬 All Movies</h2>
+    <div class="movie-list" id="movieList"></div>
+  </div>
+</div>
+
+<div class="saving-overlay" id="savingOverlay">
+  <div class="spinner"></div>
+  <div class="saving-text" id="savingText">Saving...</div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-function uploadMovie() {
-    let title = document.getElementById("movieTitle").value;
-    let file = document.getElementById("movieFile").files[0];
+  // GitHub config
+  const GITHUB_TOKEN = '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';
+  const GITHUB_USER = 'hirwasony-lgtm';
+  const GITHUB_REPO = 'shaffy-';
+  const MOVIES_FILE = 'movies.json';
+  let movies = [];
+  let fileSha = '';
 
-    if (!title || !file) {
-        alert("Fill all fields");
-        return;
+  function saveToken() {
+    const token = document.getElementById('githubToken').value.trim();
+    if (!token) { showToast('⚠ Please enter a token!'); return; }
+    localStorage.setItem('gh_token', token);
+    document.getElementById('tokenStatus').innerHTML = '<span style="color:#4caf50">✅ Token saved!</span>';
+    showToast('✅ Token saved! Loading movies...');
+    setTimeout(() => { loadMovies(); }, 500);
+  }
+
+  function getToken() {
+    return localStorage.getItem('gh_token') || '';
+  }
+
+  function checkToken() {
+    const token = getToken();
+    if (token) {
+      document.getElementById('setupBox').style.display = 'none';
     }
+  }
 
-    let movies = JSON.parse(localStorage.getItem("movies")) || [];
+  function previewPoster(url) {
+    const img = document.getElementById('posterPreview');
+    if (url.startsWith('http')) {
+      img.src = url;
+      img.style.display = 'block';
+      img.onerror = () => { img.style.display = 'none'; };
+    } else {
+      img.style.display = 'none';
+    }
+  }
 
-    movies.push({
-        title: title,
-        fileName: file.name
+  function convertDriveLink(url) {
+    const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match) return 'https://drive.google.com/file/d/' + match[1] + '/preview';
+    return url;
+  }
+
+  async function loadMovies() {
+    showSaving('Loading...');
+    try {
+      const res = await fetch(
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${MOVIES_FILE}`,
+        { headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' } }
+      );
+      if (res.status === 404) {
+        // File doesn't exist yet — create it
+        movies = [];
+        fileSha = '';
+      } else {
+        const data = await res.json();
+        fileSha = data.sha;
+        movies = JSON.parse(atob(data.content.replace(/\n/g, '')));
+      }
+    } catch(e) {
+      console.error('Load error:', e);
+      movies = [];
+    }
+    hideSaving();
+    renderMovies();
+    updateStats();
+  }
+
+  async function saveMovies() {
+    if (!GITHUB_TOKEN) { showToast('⚠ Please set your GitHub token first!'); return; }
+    showSaving('Saving...');
+    try {
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(movies, null, 2))));
+      const body = { message: 'Update movies', content };
+      if (fileSha) body.sha = fileSha;
+
+      const res = await fetch(
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${MOVIES_FILE}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': 'token ' + GITHUB_TOKEN,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        }
+      );
+      const data = await res.json();
+      if (data.content) {
+        fileSha = data.content.sha;
+        console.log('Saved to GitHub!');
+      } else {
+        console.error('Save error:', data);
+        showToast('❌ Save failed: ' + (data.message || 'Unknown error'));
+      }
+    } catch(e) {
+      console.error('Save error:', e);
+      showToast('❌ Error saving!');
+    }
+    hideSaving();
+    updateStats();
+  }
+
+  async function uploadMovie() {
+    const title = document.getElementById('movieTitle').value.trim();
+    const genre = document.getElementById('movieGenre').value;
+    const rating = document.getElementById('movieRating').value || '8.0';
+    const badge = document.getElementById('movieBadge').value;
+    const desc = document.getElementById('movieDesc').value.trim();
+    const posterUrl = document.getElementById('posterUrl').value.trim();
+    const driveLink = document.getElementById('driveLink').value.trim();
+
+    if (!title) { showToast('⚠ Please enter a movie title!'); return; }
+    if (!genre) { showToast('⚠ Please select a genre!'); return; }
+    if (!posterUrl) { showToast('⚠ Please enter a poster image URL!'); return; }
+    if (!driveLink) { showToast('⚠ Please enter a Google Drive link!'); return; }
+    if (!GITHUB_TOKEN) { showToast('⚠ Please set your GitHub token first!'); return; }
+
+    const movie = {
+      id: Date.now(), title, genre, rating, badge, desc,
+      poster: posterUrl,
+      videoUrl: convertDriveLink(driveLink),
+      isEmbed: true,
+      uploadedAt: new Date().toLocaleDateString()
+    };
+
+    movies.unshift(movie);
+    await saveMovies();
+    renderMovies();
+    resetForm();
+    showToast('🎉 "' + title + '" added!');
+  }
+
+  async function deleteMovie(id) {
+    if (!confirm('Delete this movie?')) return;
+    movies = movies.filter(m => m.id != id);
+    await saveMovies();
+    renderMovies();
+    showToast('🗑 Movie deleted.');
+  }
+
+  function resetForm() {
+    ['movieTitle','movieGenre','movieRating','movieBadge','movieDesc','posterUrl','driveLink'].forEach(id => {
+      document.getElementById(id).value = '';
     });
+    document.getElementById('posterPreview').style.display = 'none';
+  }
 
-    localStorage.setItem("movies", JSON.stringify(movies));
+  function updateStats() {
+    document.getElementById('totalMovies').textContent = movies.length;
+    document.getElementById('withVideo').textContent = movies.filter(m => m.videoUrl).length;
+    document.getElementById('noVideo').textContent = movies.filter(m => !m.videoUrl).length;
+  }
 
-    alert("Movie uploaded!");
-    loadMovies();
-}
+  function renderMovies() {
+    const list = document.getElementById('movieList');
+    if (movies.length === 0) {
+      list.innerHTML = '<div class="empty-list">No movies yet. Add your first movie above! 🎬</div>';
+      return;
+    }
+    list.innerHTML = movies.map(m => `
+      <div class="movie-row">
+        <img src="${m.poster}" alt="${m.title}" onerror="this.src='https://picsum.photos/60/80?random=${m.id}'">
+        <div class="movie-row-info">
+          <h3>${m.title} <span class="video-tag">▶ Has Video</span></h3>
+          <p>${m.genre} • ⭐ ${m.rating} • ${m.uploadedAt}</p>
+        </div>
+        <button class="btn-delete" onclick="deleteMovie(${m.id})">🗑 Delete</button>
+      </div>
+    `).join('');
+  }
 
-function loadMovies() {
-    let movies = JSON.parse(localStorage.getItem("movies")) || [];
-    let list = document.getElementById("movieList");
+  function showSaving(text) {
+    document.getElementById('savingText').textContent = text;
+    document.getElementById('savingOverlay').classList.add('show');
+  }
+  function hideSaving() { document.getElementById('savingOverlay').classList.remove('show'); }
 
-    list.innerHTML = "";
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+  }
 
-    movies.forEach(m => {
-        let li = document.createElement("li");
-        li.textContent = m.title;
-        list.appendChild(li);
-    });
-}
-
-loadMovies();
+  document.getElementById("setupBox").style.display = "none";
+  loadMovies();
 </script>
-
 </body>
 </html>
