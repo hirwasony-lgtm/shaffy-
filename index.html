@@ -259,7 +259,14 @@
     let allMovies = [];
     let currentFilter = 'all';
 
-    async function loadMovies() {
+      async function loadMovies() {
+  const res = await fetch(
+    "https://raw.githubusercontent.com/hirwasony-lgtm/shaffy-/main/movies.json"
+  );
+
+  const movies = await res.json();
+  renderMovies(movies);
+}
       try {
         const res = await fetch(
           'https://raw.githubusercontent.com/' + GITHUB_USER + '/' + GITHUB_REPO + '/main/' + MOVIES_FILE,
