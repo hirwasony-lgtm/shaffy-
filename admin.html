@@ -216,32 +216,48 @@
     return url;
   }
 
-  async function loadMovies() {
-    showSaving('Loading...');
-    try {
-      const res = await fetch(
-        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${MOVIES_FILE}`,
-        { headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' } }
-      );
-      if (res.status === 404) {
-        // File doesn't exist yet — create it
-        movies = [];
-        fileSha = '';
-      } else {
-        const data = await res.json();
-        fileSha = data.sha;
-        movies = JSON.parse(atob(data.content.replace(/\n/g, '')));
-      }
-    } catch(e) {
-      console.error('Load error:', e);
-      movies = [];
-    }
-    hideSaving();
+    async function loadMovies() {
+  showSaving('Loading...');
+
+  // 🟢 STEP 1: try local first
+  const local = localStorage.getItem("movies");
+  if (local) {
+    movies = JSON.parse(local);
     renderMovies();
     updateStats();
   }
 
+  // 🟡 STEP 2: then GitHub sync
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${MOVIES_FILE}`,
+      {
+        headers: {
+          'Authorization': 'token ' + GITHUB_TOKEN,
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      }
+    );
+
+    if (res.status !== 404) {
+      const data = await res.json();
+      fileSha = data.sha;
+      movies = JSON.parse(atob(data.content.replace(/\n/g, '')));
+
+      // sync local backup
+      localStorage.setItem("movies", JSON.stringify(movies));
+    }
+  } catch (e) {
+    console.log("GitHub sync failed, using local only");
+  }
+
+  hideSaving();
+  renderMovies();
+  updateStats();
+}
+
   async function saveMovies() {
+    localStorage.setItem("movies", JSON.stringify(movies));
     if (!GITHUB_TOKEN) { showToast('⚠ Please set your GitHub token first!'); return; }
     showSaving('Saving...');
     try {
@@ -365,4 +381,3 @@
   loadMovies();
 </script>
 </body>
-</html>
