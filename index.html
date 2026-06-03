@@ -259,7 +259,12 @@
     let allMovies = [];
     let currentFilter = 'all';
 
-      async function loadMovies() {
+        async function loadMovies() {
+  const res = await fetch("movies.json");
+  const movies = await res.json();
+
+  renderMovies(movies);
+}
   const res = await fetch(
     "https://raw.githubusercontent.com/hirwasony-lgtm/shaffy-/main/movies.json"
   );
