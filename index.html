@@ -159,7 +159,6 @@
         <span>🔍</span>
         <input type="text" id="searchInput" placeholder="Search movies..." oninput="handleSearch(this.value)">
       </div>
-      <button class="admin-btn" onclick="window.location.href='admin.html'">⚙ Admin</button>
       <button class="login-btn" onclick="openModal('login')">Login</button>
     </div>
   </nav>
@@ -408,53 +407,6 @@
 
     loadMovies();
   </script>
-  <section class="movies">
-
-    <h2>Upload Movie</h2>
-
-    <input type="file" id="movieUpload" accept="video/*">
-
-    <br><br>
-
-    <video id="videoPlayer" width="100%" controls></video>
-
-</section>
-
-<script>
-
-const movieUpload = document.getElementById("movieUpload");
-const videoPlayer = document.getElementById("videoPlayer");
-
-movieUpload.addEventListener("change", function(){
-
-    const file = this.files[0];
-
-    if(file){
-        const videoURL = URL.createObjectURL(file);
-        videoPlaye
-</script>
-<h1>Upload Movie</h1>
-
-<input type="file" id="movieUpload">
-
-<video id="videoPlayer" width="600" controls></video>
-
-<script>
-
-const upload = document.getElementById("movieUpload");
-const player = document.getElementById("videoPlayer");
-
-upload.addEventListener("change", function(){
-
-   const file = this.files[0];
-
-   if(file){
-      const url = URL.createObjectURL(file);
-      player.src = url;
-   }
-
-});
-
-</script>
+  
 </body>
 </html>
